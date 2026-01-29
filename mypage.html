@@ -44,38 +44,64 @@
 <body class="bg-gray-50 font-sans">
 
     <!-- Navigation -->
-    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex items-center justify-between">
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
-                <a href="index.html" class="flex items-center space-x-2 logo-hover">
-                    <img src="images/logo.png" alt="어디산" class="h-12 w-auto">
-                </a>
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="images/logo.png" alt="어디산" class="h-12 w-auto">
+                    </a>
+                </div>
 
-                <!-- Desktop Menu -->
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="신선한 농산물을 검색해보세요"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
+                        <button
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="products.html" class="text-gray-700 hover:text-primary transition">오늘의 농산물</a>
-                    <a href="stories.html" class="text-gray-700 hover:text-primary transition">산지 스토리</a>
-                    <a href="about.html" class="text-gray-700 hover:text-primary transition">어디산 소개</a>
+                    <a href="products.html" class="text-gray-700 hover:text-primary transition"
+                        onclick="window.location.href='products.html'">오늘의 농산물</a>
+                    <a href="stories.html" class="text-gray-700 hover:text-primary transition"
+                        onclick="window.location.href='stories.html'">산지 스토리</a>
+                    <a href="about.html" class="text-gray-700 hover:text-primary transition"
+                        onclick="window.location.href='about.html'">어디산 소개</a>
+                    <a href="javascript:void(0)" onclick="showMyPage()" class="text-primary font-bold transition">
+                        <i class="far fa-user"></i> 마이페이지
+                    </a>
+                    <a href="javascript:void(0)" onclick="showCart()"
+                        class="relative text-gray-700 hover:text-primary transition">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span
+                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                            id="cart-count">0</span>
+                    </a>
                 </div>
 
-                <!-- Right Side Icons -->
-                <div class="flex items-center space-x-4">
-                    <a href="mypage.html" class="text-primary font-bold transition">
-                        <i class="fas fa-user"></i>
-                    </a>
-                    <a href="cart.html" class="text-gray-700 hover:text-primary transition relative">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cart-count"
-                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                    </a>
-                    <button id="mobile-menu-btn" class="md:hidden text-gray-700 hover:text-primary">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                    <button onclick="logout()" class="text-sm text-gray-500 hover:text-red-500 ml-2">
-                        <i class="fas fa-sign-out-alt"></i> 로그아웃
-                    </button>
-                </div>
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-700" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-4 py-3 space-y-3">
+                <input type="text" placeholder="검색" class="w-full px-4 py-2 border border-gray-300 rounded-full">
+                <a href="products.html" class="block py-2 text-gray-700">오늘의 농산물</a>
+                <a href="stories.html" class="block py-2 text-gray-700">산지 스토리</a>
+                <a href="about.html" class="block py-2 text-gray-700">어디산 소개</a>
+                <a href="javascript:void(0)" onclick="showMyPage()" class="block py-2 text-primary font-bold">마이페이지</a>
             </div>
         </div>
     </nav>
@@ -115,6 +141,10 @@
                         </a>
                         <a href="#" class="px-6 py-4 text-gray-600 hover:bg-gray-50">
                             <i class="fas fa-cog w-6"></i> 회원 정보 수정
+                        </a>
+                        <a href="javascript:void(0)" onclick="logout()"
+                            class="px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-red-500">
+                            <i class="fas fa-sign-out-alt w-6"></i> 로그아웃
                         </a>
                     </nav>
                 </div>
@@ -257,7 +287,7 @@
     <!-- Footer -->
     <footer class="bg-gray-800 text-gray-300 py-12 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8">
+            <div class="grid md:grid-cols-2 gap-8">
                 <div>
                     <div class="flex items-center mb-4">
                         <span class="text-2xl font-bold text-white">어디산</span>
@@ -273,30 +303,7 @@
                         <li><a href="#" class="hover:text-white">전화: 1588-0000</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4">정책</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="javascript:void(0)" onclick="showPolicy('producer')" class="hover:text-white">생산자
-                                인증 정책</a></li>
-                        <li><a href="javascript:void(0)" onclick="showPolicy('refund')" class="hover:text-white">환불/취소
-                                정책</a></li>
-                        <li><a href="javascript:void(0)" onclick="showPolicy('grade')" class="hover:text-white">회원 등급
-                                정책</a></li>
-                        <li><a href="javascript:void(0)" onclick="showTerms('commission')" class="hover:text-white">수수료
-                                정산 기준</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4">이용안내</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="javascript:void(0)" onclick="showTerms('service')"
-                                class="hover:text-white">서비스이용약관</a></li>
-                        <li><a href="javascript:void(0)" onclick="showTerms('privacy')"
-                                class="font-bold text-white hover:text-green-400">개인정보처리방침</a></li>
-                        <li><a href="javascript:void(0)" onclick="showTerms('email')"
-                                class="hover:text-white">이메일무단수집거부</a></li>
-                    </ul>
-                </div>
+
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-sm text-gray-400 text-center">
                 <p>© 2026 어디산. All rights reserved. | 정책 기반 투명한 플랫폼 운영</p>
