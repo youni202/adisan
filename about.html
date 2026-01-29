@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>어디산 소개 - 우리 농부의 신선한 이야기</title>
+    <meta name="description" content="어디산은 생산자와 소비자를 직접 연결하는 투명하고 안전한 농산물 직거래 플랫폼입니다.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10b981',
+                        secondary: '#059669',
+                        accent: '#fbbf24',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Counter Animation Styles -->
+    <style>
+        .counter {
+            display: inline-block;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Pulse animation for statistics section */
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            }
+
+            50% {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+            }
+        }
+
+        #statistics-section .counter {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        /* Hero section animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+
+            to {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+        }
+
+        /* Apply animations */
+        section:first-of-type h1 {
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        section:first-of-type p:nth-of-type(1) {
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        section:first-of-type p:nth-of-type(2) {
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        section:first-of-type div:last-child {
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        section:first-of-type img {
+            animation: zoomIn 1.5s ease-out both;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-2 logo-hover">
+                    <img src="images/logo.png" alt="어디산" class="h-12 w-auto">
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="products.html" class="text-gray-700 hover:text-primary transition">오늘의 농산물</a>
+                    <a href="stories.html" class="text-gray-700 hover:text-primary transition">산지 스토리</a>
+                    <a href="about.html" class="text-primary font-semibold">어디산 소개</a>
+                </div>
+
+                <!-- Right Side Icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="mypage.html" class="text-gray-700 hover:text-primary transition">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a href="cart.html" class="text-gray-700 hover:text-primary transition relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count"
+                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-700 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="products.html" class="block py-2 text-gray-700 hover:text-primary transition">오늘의 농산물</a>
+                <a href="stories.html" class="block py-2 text-gray-700 hover:text-primary transition">산지 스토리</a>
+                <a href="about.html" class="block py-2 text-primary font-semibold">어디산 소개</a>
+                <a href="mypage.html" class="block py-2 text-gray-700 hover:text-primary transition">마이페이지</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="relative bg-gradient-to-r from-green-600 to-green-700 text-white py-32 overflow-hidden">
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0">
+                <img src="images/about-hero.jpg" alt="어디산 농장 마켓플레이스" class="w-full h-full object-cover opacity-30">
+                <div class="absolute inset-0 bg-gradient-to-r from-green-900/70 to-green-800/70"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="container mx-auto px-4 text-center relative z-10">
+                <h1 class="text-6xl font-bold mb-6 drop-shadow-lg">어디산</h1>
+                <p class="text-3xl mb-4 font-light drop-shadow-md">"어디서 나왔나?"</p>
+                <p class="text-xl max-w-3xl mx-auto leading-relaxed mb-10 drop-shadow-md">
+                    우리 농부의 정성이 당신의 식탁으로<br>
+                    중간 마진 없이, 신선하게
+                </p>
+                <div class="mt-10">
+                    <a href="products.html"
+                        class="inline-block bg-white text-green-700 px-10 py-5 rounded-lg font-semibold text-lg hover:bg-gray-100 transition shadow-2xl hover:scale-105 transform duration-300">
+                        지금 바로 시작하기
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is Eodisan Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-4xl font-bold text-center mb-12">어디산이란?</h2>
+
+                    <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4 text-gray-800">브랜드 의미</h3>
+                            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                                <span class="font-semibold text-primary">"어디서 나왔나?"</span>
+                            </p>
+                            <p class="text-gray-600 leading-relaxed mb-4">
+                                소비자가 가장 궁금해하는 질문에서 시작했습니다.
+                                농산물의 출처와 생산자를 투명하게 공개하고,
+                                안전하고 신선한 먹거리를 제공하겠다는 의지를 담았습니다.
+                            </p>
+                            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                                <p class="text-sm text-green-800">
+                                    <i class="fas fa-leaf mr-2"></i>
+                                    <strong>타깃:</strong> 20~50대 가정 주부, 1인 가구, 건강 관심층
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="bg-gray-100 rounded-lg p-8 text-center">
+                                <img src="images/logo.png" alt="어디산 로고" class="h-32 w-auto mx-auto mb-6">
+                                <h4 class="text-lg font-semibold mb-3">로고 의미</h4>
+                                <ul class="text-left space-y-2 text-gray-700">
+                                    <li><i class="fas fa-mountain text-green-600 mr-2"></i><strong>산:</strong> 안정성, 자연,
+                                        고향</li>
+                                    <li><i class="fas fa-seedling text-green-600 mr-2"></i><strong>새싹:</strong> 신선함, 성장,
+                                        희망</li>
+                                    <li><i class="fas fa-globe-asia text-green-600 mr-2"></i><strong>흙:</strong> 자연스러움,
+                                        건강, 신뢰</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Brand Tone -->
+                    <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-8 mb-12">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800 text-center">브랜드 톤</h3>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <div
+                                    class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-check-double text-white text-2xl"></i>
+                                </div>
+                                <h4 class="font-semibold mb-2">명확함</h4>
+                                <p class="text-sm text-gray-600">원산지, 생산자, 정책을 투명하게 공개</p>
+                            </div>
+                            <div class="text-center">
+                                <div
+                                    class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-heart text-white text-2xl"></i>
+                                </div>
+                                <h4 class="font-semibold mb-2">신선함</h4>
+                                <p class="text-sm text-gray-600">수확 직후 배송, 중간 단계 최소화</p>
+                            </div>
+                            <div class="text-center">
+                                <div
+                                    class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-map-marked-alt text-white text-2xl"></i>
+                                </div>
+                                <h4 class="font-semibold mb-2">로컬 정체성</h4>
+                                <p class="text-sm text-gray-600">우리 농부, 우리 땅의 가치를 존중</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Values Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12">핵심 가치</h2>
+
+                <div class="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition text-center">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-green-600 text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">투명성</h3>
+                        <p class="text-gray-600 text-sm">
+                            2단계 생산자 인증<br>
+                            원산지 필수 표시<br>
+                            정책 기반 운영
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition text-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-won-sign text-blue-600 text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">합리적 가격</h3>
+                        <p class="text-gray-600 text-sm">
+                            수수료 4.5~5.5%<br>
+                            중간 유통 제거<br>
+                            생산자/소비자 모두 이익
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition text-center">
+                        <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-certificate text-yellow-600 text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">품질 보증</h3>
+                        <p class="text-gray-600 text-sm">
+                            GAP/유기농 우대<br>
+                            5단계 등급 시스템<br>
+                            정기 품질 관리
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition text-center">
+                        <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-handshake text-red-600 text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">신뢰 구축</h3>
+                        <p class="text-gray-600 text-sm">
+                            3단계 분쟁 해결<br>
+                            7일 환불 보장<br>
+                            공정한 제재 시스템
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12">어디산은 어떻게 작동하나요?</h2>
+
+                <div class="max-w-5xl mx-auto">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <!-- Step 1 -->
+                        <div class="relative">
+                            <div class="text-center mb-6">
+                                <div
+                                    class="w-24 h-24 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-user-check text-4xl text-primary"></i>
+                                </div>
+                                <div
+                                    class="absolute top-0 right-0 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-xl">
+                                    1
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 text-center">생산자 인증</h3>
+                            <p class="text-gray-600 text-center mb-4">
+                                엄격한 2단계 인증 시스템으로<br>
+                                안전한 생산자만 입점합니다
+                            </p>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><i class="fas fa-check text-green-600 mr-2"></i>서류 심사 (사업자등록증, 인증서)</li>
+                                    <li><i class="fas fa-check text-green-600 mr-2"></i>현장 확인 (농장 방문, 품질 점검)</li>
+                                    <li><i class="fas fa-check text-green-600 mr-2"></i>연 1회 재인증 (지속적 품질 관리)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="relative">
+                            <div class="text-center mb-6">
+                                <div
+                                    class="w-24 h-24 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-shopping-cart text-4xl text-primary"></i>
+                                </div>
+                                <div
+                                    class="absolute top-0 right-0 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-xl">
+                                    2
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 text-center">직거래 주문</h3>
+                            <p class="text-gray-600 text-center mb-4">
+                                중간 유통 없이 생산자에게 직접<br>
+                                신선한 농산물을 주문하세요
+                            </p>
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><i class="fas fa-percent text-blue-600 mr-2"></i>수수료 5.5% (GAP/유기농 4.5%)</li>
+                                    <li><i class="fas fa-truck text-blue-600 mr-2"></i>30,000원 이상 무료배송</li>
+                                    <li><i class="fas fa-tags text-blue-600 mr-2"></i>등급별 할인 혜택</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="relative">
+                            <div class="text-center mb-6">
+                                <div
+                                    class="w-24 h-24 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-truck-fast text-4xl text-primary"></i>
+                                </div>
+                                <div
+                                    class="absolute top-0 right-0 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-xl">
+                                    3
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 text-center">신선 배송</h3>
+                            <p class="text-gray-600 text-center mb-4">
+                                수확 후 바로 포장하여<br>
+                                2~3일 내 신선하게 배송
+                            </p>
+                            <div class="bg-yellow-50 rounded-lg p-4">
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><i class="fas fa-box text-yellow-600 mr-2"></i>신선 포장 (콜드체인 배송)</li>
+                                    <li><i class="fas fa-undo text-yellow-600 mr-2"></i>배송 후 7일 환불 보장</li>
+                                    <li><i class="fas fa-headset text-yellow-600 mr-2"></i>24시간 고객 지원</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section id="statistics-section" class="py-16 bg-gradient-to-r from-green-600 to-green-700 text-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12">어디산의 성과</h2>
+
+                <div class="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+                    <div class="text-center">
+                        <div class="text-5xl font-bold mb-2">
+                            <span class="counter" data-target="1200">0</span>+
+                        </div>
+                        <p class="text-lg opacity-90">인증된 생산자</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold mb-2">
+                            <span class="counter" data-target="50000">0</span>+
+                        </div>
+                        <p class="text-lg opacity-90">월간 주문 건수</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold mb-2">
+                            <span class="counter" data-target="98.5" data-decimal="1">0</span>%
+                        </div>
+                        <p class="text-lg opacity-90">고객 만족도</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold mb-2">
+                            <span class="counter" data-target="4.8" data-decimal="1">0</span>/5.0
+                        </div>
+                        <p class="text-lg opacity-90">평균 리뷰 점수</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Policy Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12">정책 기반 투명 운영</h2>
+
+                <div class="max-w-5xl mx-auto">
+                    <p class="text-xl text-gray-600 text-center mb-12">
+                        어디산은 <strong class="text-primary">8개의 명확한 정책</strong>으로<br>
+                        생산자와 소비자를 공정하게 보호합니다
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-green-500">
+                            <h3 class="text-lg font-bold mb-2">
+                                <i class="fas fa-certificate text-green-600 mr-2"></i>
+                                생산자 인증 정책
+                            </h3>
+                            <p class="text-sm text-gray-600">2단계 인증, Fast Track 제도, 연 1회 재인증</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-blue-500">
+                            <h3 class="text-lg font-bold mb-2">
+                                <i class="fas fa-undo text-blue-600 mr-2"></i>
+                                환불/취소 정책
+                            </h3>
+                            <p class="text-sm text-gray-600">7일 환불 보장, 농산물 특성 고지, 증빙 제출 절차</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-yellow-500">
+                            <h3 class="text-lg font-bold mb-2">
+                                <i class="fas fa-percentage text-yellow-600 mr-2"></i>
+                                수수료 정책
+                            </h3>
+                            <p class="text-sm text-gray-600">기본 5.5%, 등급별 차등, GAP/유기농 -1.0%p</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-purple-500">
+                            <h3 class="text-lg font-bold mb-2">
+                                <i class="fas fa-trophy text-purple-600 mr-2"></i>
+                                회원/등급 정책
+                            </h3>
+                            <p class="text-sm text-gray-600">소비자 5등급, 판매자 4등급, 매월 자동 갱신</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-red-500">
+                            <h3 class="text-lg font-bold mb-2">
+                                <i class="fas fa-gavel text-red-600 mr-2"></i>
+                                분쟁 해결 정책
+                            </h3>
+                            <p class="text-sm text-gray-600">3단계 분쟁 해결, SLA 보장, 공정한 판단</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-orange-500">
+                            <h3 class="text-lg font-bold mb-2">
+                                <i class="fas fa-ban text-orange-600 mr-2"></i>
+                                승인/제재 정책
+                            </h3>
+                            <p class="text-sm text-gray-600">4단계 제재, 누적 기준, 영구 정지 사유 명시</p>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-10">
+                        <a href="#" class="text-primary hover:text-secondary font-semibold">
+                            전체 정책 상세보기 <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-4xl font-bold mb-8">우리의 비전</h2>
+                    <blockquote class="text-2xl text-gray-700 italic mb-8 border-l-4 border-primary pl-6">
+                        "우리 농부의 정성이 당신의 식탁으로,<br>
+                        중간 마진 없이 신선하게"
+                    </blockquote>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-8">
+                        어디산은 단순한 유통 플랫폼을 넘어,<br>
+                        <strong class="text-primary">농부와 소비자가 함께 성장하는 생태계</strong>를 만듭니다.
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-6 mt-12">
+                        <div class="bg-white rounded-lg p-6 shadow-md">
+                            <i class="fas fa-seedling text-4xl text-green-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">농부 지원</h3>
+                            <p class="text-sm text-gray-600">합리적 수수료로 농부의 수익 보장</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 shadow-md">
+                            <i class="fas fa-users text-4xl text-blue-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">소비자 만족</h3>
+                            <p class="text-sm text-gray-600">신선하고 안전한 먹거리 제공</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 shadow-md">
+                            <i class="fas fa-globe-asia text-4xl text-yellow-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">지속 가능성</h3>
+                            <p class="text-sm text-gray-600">로컬 농업 활성화, 환경 보호</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 bg-gradient-to-r from-primary to-secondary text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-bold mb-6">지금 바로 시작하세요!</h2>
+                <p class="text-xl mb-8">신선한 우리 농산물을 만나보세요</p>
+                <div class="flex justify-center gap-4">
+                    <a href="products.html"
+                        class="bg-white text-green-700 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition shadow-lg">
+                        <i class="fas fa-shopping-basket mr-2"></i>
+                        상품 둘러보기
+                    </a>
+                    <a href="stories.html"
+                        class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-green-700 transition">
+                        <i class="fas fa-book-open mr-2"></i>
+                        산지 스토리 보기
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12 mt-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl font-bold text-white">어디산</span>
+                    </div>
+                    <p class="text-sm text-gray-400">
+                        생산자와 소비자를 연결하는<br>
+                        농산물 직거래 플랫폼
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">고객센터</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">공지사항</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">1:1 문의</a></li>
+                        <li><a href="#" class="hover:text-white">전화: 1588-0000</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">정책</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showPolicy('producer')" class="hover:text-white">생산자
+                                인증 정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('refund')" class="hover:text-white">환불/취소
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('grade')" class="hover:text-white">회원 등급
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('commission')" class="hover:text-white">수수료
+                                정산 기준</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">이용안내</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showTerms('service')"
+                                class="hover:text-white">서비스이용약관</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('privacy')"
+                                class="font-bold text-white hover:text-green-400">개인정보처리방침</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('email')"
+                                class="hover:text-white">이메일무단수집거부</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-sm text-gray-400 text-center">
+                <p>© 2026 어디산. All rights reserved. | 정책 기반 투명한 플랫폼 운영</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="modal-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/terms-data.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Update cart count from localStorage
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+            }
+        }
+
+        // Counter Animation
+        function animateCounter(element, target, duration = 2000, hasDecimal = false) {
+            let startTime = null;
+            const startValue = 0;
+
+            function easeOutExpo(t) {
+                return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+            }
+
+            function updateCounter(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                const easedProgress = easeOutExpo(progress);
+                const currentValue = startValue + (target - startValue) * easedProgress;
+
+                if (hasDecimal) {
+                    element.textContent = currentValue.toFixed(1);
+                } else {
+                    element.textContent = Math.floor(currentValue).toLocaleString();
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+            }
+
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Intersection Observer for counter animation
+        function initCounterAnimation() {
+            const counters = document.querySelectorAll('.counter');
+            const statisticsSection = document.getElementById('statistics-section');
+
+            if (!counters.length || !statisticsSection) return;
+
+            let animated = false;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !animated) {
+                        animated = true;
+                        counters.forEach(counter => {
+                            const target = parseFloat(counter.getAttribute('data-target'));
+                            const hasDecimal = counter.hasAttribute('data-decimal');
+                            animateCounter(counter, target, 2000, hasDecimal);
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.5 // Trigger when 50% of the section is visible
+            });
+
+            observer.observe(statisticsSection);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            initCounterAnimation();
+        });
+    </script>
+</body>
+
+</html>

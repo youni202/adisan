@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 대시보드 - 어디산</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10b981',
+                        secondary: '#059669',
+                        dark: '#1f2937',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside class="w-64 bg-dark text-white flex-shrink-0 hidden md:flex flex-col">
+            <div class="p-4 border-b border-gray-700 flex items-center gap-3">
+                <img src="images/logo.png" alt="어디산" class="h-8 w-auto brightness-0 invert">
+                <span class="font-bold text-lg">관리자 센터</span>
+            </div>
+
+            <nav class="flex-1 py-6 space-y-2 px-3">
+                <a href="admin.html" class="flex items-center px-4 py-3 bg-gray-700 text-white rounded-lg transition">
+                    <i class="fas fa-chart-line w-6"></i>
+                    <span>대시보드</span>
+                </a>
+                <a href="admin-products.html"
+                    class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition">
+                    <i class="fas fa-box w-6"></i>
+                    <span>상품 관리</span>
+                </a>
+                <a href="admin-orders.html"
+                    class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition">
+                    <i class="fas fa-shopping-cart w-6"></i>
+                    <span>주문 관리</span>
+                </a>
+                <a href="#"
+                    class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition">
+                    <i class="fas fa-users w-6"></i>
+                    <span>회원 관리</span>
+                </a>
+                <a href="#"
+                    class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition">
+                    <i class="fas fa-cog w-6"></i>
+                    <span>설정</span>
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-gray-700">
+                <a href="index.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white transition">
+                    <i class="fas fa-sign-out-alt w-6"></i>
+                    <span>사이트로 이동</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-6 z-10">
+                <div class="md:hidden">
+                    <button class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-4 ml-auto">
+                    <button class="relative p-2 text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-bell"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-500">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-700">관리자님</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Scroll Area -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto p-6">
+                <div class="mb-8 flex justify-between items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">대시보드</h1>
+                    <div class="text-sm text-gray-500">최근 업데이트: <span id="current-time"></span></div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-primary">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-semibold text-gray-400 uppercase">오늘 매출</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">2,450,000원</h3>
+                            </div>
+                            <div class="p-2 bg-green-50 rounded-lg text-green-600">
+                                <i class="fas fa-won-sign"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-sm">
+                            <span class="text-green-500 font-semibold"><i class="fas fa-arrow-up mr-1"></i>12%</span>
+                            <span class="text-gray-400 ml-2">전일 대비</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-semibold text-gray-400 uppercase">신규 주문</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">45건</h3>
+                            </div>
+                            <div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-sm">
+                            <span class="text-green-500 font-semibold"><i class="fas fa-arrow-up mr-1"></i>5%</span>
+                            <span class="text-gray-400 ml-2">전일 대비</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-yellow-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-semibold text-gray-400 uppercase">배송 대기</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">12건</h3>
+                            </div>
+                            <div class="p-2 bg-yellow-50 rounded-lg text-yellow-600">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-sm">
+                            <span class="text-gray-400">빠른 처리가 필요합니다</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-purple-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-semibold text-gray-400 uppercase">신규 회원</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">8명</h3>
+                            </div>
+                            <div class="p-2 bg-purple-50 rounded-lg text-purple-600">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-sm">
+                            <span class="text-green-500 font-semibold"><i class="fas fa-arrow-up mr-1"></i>2명</span>
+                            <span class="text-gray-400 ml-2">전일 대비</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Sales Chart -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">주간 매출 추이</h3>
+                        <canvas id="salesChart" height="300"></canvas>
+                    </div>
+
+                    <!-- Popular Products -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">인기 상품 TOP 5</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="border-b text-gray-500 text-sm">
+                                    <tr>
+                                        <th class="pb-3 pl-2">상품명</th>
+                                        <th class="pb-3">판매량</th>
+                                        <th class="pb-3 text-right">매출액</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm">
+                                    <tr class="border-b last:border-0 hover:bg-gray-50">
+                                        <td class="py-3 pl-2 flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded bg-gray-200 overflow-hidden">
+                                                <img src="images/product-placeholder.jpg"
+                                                    class="w-full h-full object-cover">
+                                            </div>
+                                            <span class="font-medium text-gray-800">유기농 쌈채소 세트</span>
+                                        </td>
+                                        <td class="py-3 font-medium">124개</td>
+                                        <td class="py-3 text-right text-gray-600">1,860,000원</td>
+                                    </tr>
+                                    <tr class="border-b last:border-0 hover:bg-gray-50">
+                                        <td class="py-3 pl-2 flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded bg-gray-200 overflow-hidden">
+                                                <img src="images/product-placeholder.jpg"
+                                                    class="w-full h-full object-cover">
+                                            </div>
+                                            <span class="font-medium text-gray-800">당도 선별 성주 참외</span>
+                                        </td>
+                                        <td class="py-3 font-medium">98개</td>
+                                        <td class="py-3 text-right text-gray-600">2,450,000원</td>
+                                    </tr>
+                                    <tr class="border-b last:border-0 hover:bg-gray-50">
+                                        <td class="py-3 pl-2 flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded bg-gray-200 overflow-hidden">
+                                                <img src="images/product-placeholder.jpg"
+                                                    class="w-full h-full object-cover">
+                                            </div>
+                                            <span class="font-medium text-gray-800">무항생제 1등급 계란</span>
+                                        </td>
+                                        <td class="py-3 font-medium">85개</td>
+                                        <td class="py-3 text-right text-gray-600">850,000원</td>
+                                    </tr>
+                                    <tr class="border-b last:border-0 hover:bg-gray-50">
+                                        <td class="py-3 pl-2 flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded bg-gray-200 overflow-hidden">
+                                                <img src="images/product-placeholder.jpg"
+                                                    class="w-full h-full object-cover">
+                                            </div>
+                                            <span class="font-medium text-gray-800">제주 노지 감귤</span>
+                                        </td>
+                                        <td class="py-3 font-medium">72개</td>
+                                        <td class="py-3 text-right text-gray-600">1,080,000원</td>
+                                    </tr>
+                                    <tr class="border-b last:border-0 hover:bg-gray-50">
+                                        <td class="py-3 pl-2 flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded bg-gray-200 overflow-hidden">
+                                                <img src="images/product-placeholder.jpg"
+                                                    class="w-full h-full object-cover">
+                                            </div>
+                                            <span class="font-medium text-gray-800">강원도 고랭지 배추</span>
+                                        </td>
+                                        <td class="py-3 font-medium">56개</td>
+                                        <td class="py-3 text-right text-gray-600">1,680,000원</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-bold text-gray-800">최근 주문 내역</h3>
+                        <a href="admin-orders.html" class="text-sm text-primary hover:underline">모두 보기</a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50 text-gray-500 text-sm">
+                                <tr>
+                                    <th class="py-3 px-4 rounded-l-lg">주문번호</th>
+                                    <th class="py-3 px-4">고객명</th>
+                                    <th class="py-3 px-4">상품명</th>
+                                    <th class="py-3 px-4">금액</th>
+                                    <th class="py-3 px-4">상태</th>
+                                    <th class="py-3 px-4 rounded-r-lg">일시</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm divide-y">
+                                <tr>
+                                    <td class="py-3 px-4 font-mono text-gray-600">#ORD-20260129-01</td>
+                                    <td class="py-3 px-4 font-semibold">김민수</td>
+                                    <td class="py-3 px-4">유기농 쌈채소 외 2건</td>
+                                    <td class="py-3 px-4">45,000원</td>
+                                    <td class="py-3 px-4"><span
+                                            class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-semibold">결제완료</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-gray-500">14:30</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-mono text-gray-600">#ORD-20260129-02</td>
+                                    <td class="py-3 px-4 font-semibold">이영희</td>
+                                    <td class="py-3 px-4">성주 참외 3kg</td>
+                                    <td class="py-3 px-4">25,000원</td>
+                                    <td class="py-3 px-4"><span
+                                            class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-semibold">배송준비</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-gray-500">13:15</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-mono text-gray-600">#ORD-20260129-03</td>
+                                    <td class="py-3 px-4 font-semibold">박철수</td>
+                                    <td class="py-3 px-4">무항생제 계란 30구</td>
+                                    <td class="py-3 px-4">12,000원</td>
+                                    <td class="py-3 px-4"><span
+                                            class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-semibold">배송중</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-gray-500">11:40</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-mono text-gray-600">#ORD-20260129-04</td>
+                                    <td class="py-3 px-4 font-semibold">최지은</td>
+                                    <td class="py-3 px-4">제주 감귤 5kg</td>
+                                    <td class="py-3 px-4">18,000원</td>
+                                    <td class="py-3 px-4"><span
+                                            class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-semibold">배송완료</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-gray-500">09:20</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Admin Logic -->
+    <script src="js/admin.js"></script>
+    <script>
+        // Set current time
+        document.getElementById('current-time').textContent = new Date().toLocaleString();
+
+        // Chart.js Mock Data
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        const salesChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['월', '화', '수', '목', '금', '토', '일'],
+                datasets: [{
+                    label: '일별 매출',
+                    data: [1500000, 1800000, 1600000, 2100000, 2450000, 3100000, 2800000],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            borderDash: [5, 5]
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

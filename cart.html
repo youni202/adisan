@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니 - 어디산</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10b981',
+                        secondary: '#059669',
+                        accent: '#fbbf24',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-2 logo-hover">
+                    <img src="images/logo.png" alt="어디산" class="h-12 w-auto">
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="products.html" class="text-gray-700 hover:text-primary transition">오늘의 농산물</a>
+                    <a href="stories.html" class="text-gray-700 hover:text-primary transition">산지 스토리</a>
+                    <a href="about.html" class="text-gray-700 hover:text-primary transition">어디산 소개</a>
+                </div>
+
+                <!-- Right Side Icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="mypage.html" class="text-gray-700 hover:text-primary transition">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a href="cart.html" class="text-primary hover:text-primary transition relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count"
+                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">장바구니</h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" id="cart-container">
+            <!-- Left: Cart Items -->
+            <div class="lg:col-span-2 space-y-4" id="cart-items">
+                <!-- Items will be injected here -->
+            </div>
+
+            <!-- Right: Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white shadow rounded-lg p-6 sticky top-24">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">결제 예정 금액</h2>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between text-gray-600">
+                            <span>상품 금액</span>
+                            <span id="summary-items-price">0원</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>배송비</span>
+                            <span id="summary-delivery-fee">0원</span>
+                        </div>
+                        <div class="border-t pt-3 flex justify-between items-center">
+                            <span class="font-bold text-gray-900">총 결제 금액</span>
+                            <span class="font-bold text-2xl text-primary" id="summary-total-price">0원</span>
+                        </div>
+                    </div>
+
+                    <button onclick="window.location.href='checkout.html'" id="checkout-btn"
+                        class="w-full bg-primary text-white py-4 rounded-lg font-bold text-lg hover:bg-secondary transition shadow-lg">
+                        주문하기
+                    </button>
+
+                    <div class="mt-4 bg-gray-50 p-4 rounded-lg text-sm text-gray-500">
+                        <p class="mb-2"><i class="fas fa-info-circle mr-1"></i> 30,000원 이상 구매 시 무료 배송</p>
+                        <p><i class="fas fa-truck mr-1"></i> 평일 오후 2시 이전 주문 시 당일 발송</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty Cart State -->
+        <div id="empty-cart" class="hidden text-center py-20">
+            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-shopping-cart text-4xl text-gray-400"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">장바구니가 비어있습니다</h2>
+            <p class="text-gray-500 mb-8">신선한 우리 농산물을 담아보세요!</p>
+            <a href="products.html"
+                class="bg-primary text-white px-8 py-3 rounded-full font-bold hover:bg-secondary transition">
+                상품 둘러보기
+            </a>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFullCart();
+        });
+
+        function renderFullCart() {
+            loadCartFromStorage();
+            updateCartCount();
+
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartContainer = document.getElementById('cart-container');
+            const emptyCart = document.getElementById('empty-cart');
+
+            if (cart.length === 0) {
+                cartContainer.classList.add('hidden');
+                emptyCart.classList.remove('hidden');
+                return;
+            }
+
+            cartContainer.classList.remove('hidden');
+            emptyCart.classList.add('hidden');
+
+            cartItemsContainer.innerHTML = cart.map((item, index) => `
+                <div class="bg-white shadow rounded-lg p-6 flex flex-col sm:flex-row items-center gap-6">
+                    <div class="flex-shrink-0">
+                         <!-- Placeholder for image if we don't have it stored in cart, ideally cart should store image url too -->
+                        <div class="w-24 h-24 bg-gray-100 rounded-md flex items-center justify-center text-gray-300">
+                            <i class="fas fa-leaf text-3xl"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1 w-full text-center sm:text-left">
+                        <div class="mb-1">
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">${item.farmer}</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">${item.name}</h3>
+                        <p class="text-primary font-bold">${item.price.toLocaleString()}원 <span class="text-sm text-gray-500 font-normal">/ ${item.unit}</span></p>
+                    </div>
+                    
+                    <div class="flex items-center gap-3">
+                        <button onclick="updateCartItemAndRender(${index}, -1)" class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100">
+                            <i class="fas fa-minus text-xs"></i>
+                        </button>
+                        <span class="font-bold w-8 text-center">${item.quantity}</span>
+                        <button onclick="updateCartItemAndRender(${index}, 1)" class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="text-right min-w-[100px]">
+                        <p class="font-bold text-lg">${(item.price * item.quantity).toLocaleString()}원</p>
+                    </div>
+                    
+                    <button onclick="removeCartItemAndRender(${index})" class="text-gray-400 hover:text-red-500 p-2">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            updateSummary();
+        }
+
+        function updateCartItemAndRender(index, delta) {
+            updateCartItemQuantity(index, delta);
+            renderFullCart();
+        }
+
+        function removeCartItemAndRender(index) {
+            if (confirm('삭제하시겠습니까?')) {
+                cart.splice(index, 1);
+                saveCartToStorage();
+                renderFullCart();
+            }
+        }
+
+        function updateSummary() {
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = totalAmount >= 30000 ? 0 : 3000;
+            const finalAmount = totalAmount + deliveryFee;
+
+            document.getElementById('summary-items-price').textContent = totalAmount.toLocaleString() + '원';
+            document.getElementById('summary-delivery-fee').textContent = deliveryFee === 0 ? '무료' : deliveryFee.toLocaleString() + '원';
+            document.getElementById('summary-total-price').textContent = finalAmount.toLocaleString() + '원';
+        }
+    </script>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl font-bold text-white">어디산</span>
+                    </div>
+                    <p class="text-sm text-gray-400">생산자와 소비자를 연결하는<br>농산물 직거래 플랫폼</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">고객센터</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">공지사항</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">1:1 문의</a></li>
+                        <li><a href="#" class="hover:text-white">전화: 1588-0000</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">정책</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showPolicy('producer')" class="hover:text-white">생산자
+                                인증 정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('refund')" class="hover:text-white">환불/취소
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('grade')" class="hover:text-white">회원 등급
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('commission')" class="hover:text-white">수수료
+                                정산 기준</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">이용안내</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showTerms('service')"
+                                class="hover:text-white">서비스이용약관</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('privacy')"
+                                class="font-bold text-white hover:text-green-400">개인정보처리방침</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('email')"
+                                class="hover:text-white">이메일무단수집거부</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-sm text-gray-400 text-center">
+                <p>© 2026 어디산. All rights reserved. | 정책 기반 투명한 플랫폼 운영</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="modal-container"></div>
+
+    <script src="js/terms-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

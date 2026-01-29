@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주문/결제 - 어디산</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10b981',
+                        secondary: '#059669',
+                        accent: '#fbbf24',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Navigation (Simplified) -->
+    <nav class="bg-white shadow-sm p-4 border-b">
+        <div class="container mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-2">
+                <img src="images/logo.png" alt="어디산" class="h-10 w-auto">
+            </a>
+            <h1 class="text-xl font-bold text-gray-800">주문/결제</h1>
+        </div>
+    </nav>
+
+    <main class="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+        <form onsubmit="handleOrder(event)" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left Column: Order Form -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <!-- Purchaser Info -->
+                <section class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2">주문자 정보</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">이름</label>
+                            <input type="text" id="order-name" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary px-3 py-2 border">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">연락처</label>
+                            <input type="tel" id="order-phone" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary px-3 py-2 border"
+                                placeholder="010-0000-0000">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">이메일</label>
+                            <input type="email" id="order-email" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary px-3 py-2 border">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Shipping Info -->
+                <section class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2">배송 정보</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <input type="checkbox" id="same-address" class="rounded text-primary focus:ring-primary"
+                                onchange="copyAddress()">
+                            <label for="same-address" class="text-sm text-gray-700">주문자 정보와 동일</label>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">받는 분</label>
+                            <input type="text" id="ship-name" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary px-3 py-2 border">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">연락처</label>
+                            <input type="tel" id="ship-phone" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary px-3 py-2 border">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">주소</label>
+                            <div class="flex gap-2 mb-2">
+                                <input type="text" placeholder="우편번호"
+                                    class="w-32 border-gray-300 rounded-md shadow-sm px-3 py-2 border" readonly
+                                    value="12345">
+                                <button type="button"
+                                    class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-md text-sm hover:bg-gray-200">주소
+                                    검색</button>
+                            </div>
+                            <input type="text" id="ship-address" required placeholder="기본 주소"
+                                class="w-full border-gray-300 rounded-md shadow-sm mb-2 px-3 py-2 border">
+                            <input type="text" id="ship-address-detail" required placeholder="상세 주소"
+                                class="w-full border-gray-300 rounded-md shadow-sm px-3 py-2 border">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">배송 메모</label>
+                            <select
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary px-3 py-2 border">
+                                <option>문 앞에 놓아주세요</option>
+                                <option>직접 받겠습니다</option>
+                                <option>배송 전 연락주세요</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Payment Method -->
+                <section class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2">결제 수단</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label
+                            class="border rounded-lg p-4 flex items-center justify-center gap-2 cursor-pointer hover:border-primary hover:bg-green-50 transition ring-2 ring-primary bg-green-50">
+                            <input type="radio" name="payment" value="card" checked
+                                class="text-primary focus:ring-primary">
+                            <span><i class="far fa-credit-card mr-1"></i> 신용카드</span>
+                        </label>
+                        <label
+                            class="border rounded-lg p-4 flex items-center justify-center gap-2 cursor-pointer hover:border-primary hover:bg-green-50 transition">
+                            <input type="radio" name="payment" value="vbank" class="text-primary focus:ring-primary">
+                            <span><i class="fas fa-university mr-1"></i> 무통장입금</span>
+                        </label>
+                        <label
+                            class="border rounded-lg p-4 flex items-center justify-center gap-2 cursor-pointer hover:border-primary hover:bg-green-50 transition">
+                            <input type="radio" name="payment" value="kakao" class="text-primary focus:ring-primary">
+                            <span><i class="fas fa-comment mr-1"></i> 카카오페이</span>
+                        </label>
+                        <label
+                            class="border rounded-lg p-4 flex items-center justify-center gap-2 cursor-pointer hover:border-primary hover:bg-green-50 transition">
+                            <input type="radio" name="payment" value="naver" class="text-primary focus:ring-primary">
+                            <span><i class="fas fa-mouse-pointer mr-1"></i> 네이버페이</span>
+                        </label>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white shadow rounded-lg p-6 sticky top-24">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">결제 금액</h2>
+
+                    <div class="space-y-4 mb-6">
+                        <div id="order-items-summary" class="text-sm text-gray-600 space-y-1 max-h-40 overflow-y-auto">
+                            <!-- Items injected here -->
+                        </div>
+
+                        <div class="border-t pt-4 space-y-2">
+                            <div class="flex justify-between text-gray-600">
+                                <span>총 상품금액</span>
+                                <span id="checkout-items-price">0원</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600">
+                                <span>배송비</span>
+                                <span id="checkout-delivery-fee">0원</span>
+                            </div>
+                        </div>
+
+                        <div
+                            class="border-t pt-4 flex justify-between items-center text-xl font-bold bg-gray-50 p-3 rounded-lg">
+                            <span>최종 결제 금액</span>
+                            <span class="text-primary" id="checkout-total-price">0원</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="flex items-start gap-2 text-sm text-gray-600">
+                            <input type="checkbox" required class="mt-1 rounded text-primary focus:ring-primary">
+                            <span>(필수) 주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.</span>
+                        </label>
+                        <button type="submit"
+                            class="w-full bg-primary text-white py-4 rounded-lg font-bold text-lg hover:bg-secondary transition shadow-lg">
+                            결제하기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCartFromStorage();
+
+            if (cart.length === 0) {
+                alert('장바구니가 비어있습니다.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            renderOrderSummary();
+
+            // Auto-fill user info if logged in
+            const userStr = localStorage.getItem('eodisan_user');
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                document.getElementById('order-name').value = user.name;
+                document.getElementById('order-email').value = user.email;
+            }
+        });
+
+        function renderOrderSummary() {
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = totalAmount >= 30000 ? 0 : 3000;
+            const finalAmount = totalAmount + deliveryFee;
+
+            const summaryContainer = document.getElementById('order-items-summary');
+            summaryContainer.innerHTML = cart.map(item => `
+                <div class="flex justify-between">
+                    <span class="truncate pr-4">${item.name} x ${item.quantity}</span>
+                    <span class="font-medium">${(item.price * item.quantity).toLocaleString()}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('checkout-items-price').textContent = totalAmount.toLocaleString() + '원';
+            document.getElementById('checkout-delivery-fee').textContent = deliveryFee.toLocaleString() + '원';
+            document.getElementById('checkout-total-price').textContent = finalAmount.toLocaleString() + '원';
+        }
+
+        function copyAddress() {
+            if (document.getElementById('same-address').checked) {
+                document.getElementById('ship-name').value = document.getElementById('order-name').value;
+                document.getElementById('ship-phone').value = document.getElementById('order-phone').value;
+            } else {
+                document.getElementById('ship-name').value = '';
+                document.getElementById('ship-phone').value = '';
+            }
+        }
+
+        function handleOrder(e) {
+            e.preventDefault();
+
+            if (!confirm('결제를 진행하시겠습니까?')) return;
+
+            // Create Order Object
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = totalAmount >= 30000 ? 0 : 3000;
+            const finalAmount = totalAmount + deliveryFee;
+
+            const newOrder = {
+                id: 'ORD-' + Date.now(),
+                date: new Date().toISOString().split('T')[0],
+                items: [...cart],
+                totalAmount: finalAmount,
+                status: '결제완료'
+            };
+
+            // Save to Orders
+            const orders = JSON.parse(localStorage.getItem('eodisan_orders') || '[]');
+            orders.push(newOrder);
+            localStorage.setItem('eodisan_orders', JSON.stringify(orders));
+
+            // Clear Cart
+            cart = [];
+            saveCartToStorage();
+
+            // Redirect
+            window.location.href = 'order-complete.html';
+        }
+    </script>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl font-bold text-white">어디산</span>
+                    </div>
+                    <p class="text-sm text-gray-400">생산자와 소비자를 연결하는<br>농산물 직거래 플랫폼</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">고객센터</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">공지사항</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">1:1 문의</a></li>
+                        <li><a href="#" class="hover:text-white">전화: 1588-0000</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">정책</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showPolicy('producer')" class="hover:text-white">생산자
+                                인증 정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('refund')" class="hover:text-white">환불/취소
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('grade')" class="hover:text-white">회원 등급
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('commission')" class="hover:text-white">수수료
+                                정산 기준</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">이용안내</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showTerms('service')"
+                                class="hover:text-white">서비스이용약관</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('privacy')"
+                                class="font-bold text-white hover:text-green-400">개인정보처리방침</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('email')"
+                                class="hover:text-white">이메일무단수집거부</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-sm text-gray-400 text-center">
+                <p>© 2026 어디산. All rights reserved. | 정책 기반 투명한 플랫폼 운영</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="modal-container"></div>
+
+    <script src="js/terms-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

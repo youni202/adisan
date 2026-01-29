@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 농산물 - 어디산</title>
+    <meta name="description" content="신선하고 안전한 우리 농산물을 만나보세요. 생산자 직거래로 더 신선하게, 더 저렴하게.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2D5D3F',
+                        secondary: '#3D7A52',
+                        accent: '#8B7355',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-sans bg-gray-50">
+
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="images/logo.png" alt="어디산" class="h-12 w-auto">
+                    </a>
+                </div>
+
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" id="search-input" placeholder="신선한 농산물을 검색해보세요"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
+                        <button onclick="searchProducts()"
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition">홈</a>
+                    <a href="products.html" class="text-primary font-semibold">오늘의 농산물</a>
+                    <a href="#stories" class="text-gray-700 hover:text-primary transition">산지 스토리</a>
+                    <a href="javascript:void(0)" onclick="showMyPage()"
+                        class="text-gray-700 hover:text-primary transition">
+                        <i class="far fa-user"></i> 마이페이지
+                    </a>
+                    <a href="javascript:void(0)" onclick="showCart()"
+                        class="relative text-gray-700 hover:text-primary transition">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span
+                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                            id="cart-count">0</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-700" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-4 py-3 space-y-3">
+                <input type="text" placeholder="검색" class="w-full px-4 py-2 border border-gray-300 rounded-full">
+                <a href="index.html" class="block py-2 text-gray-700">홈</a>
+                <a href="products.html" class="block py-2 text-primary font-semibold">오늘의 농산물</a>
+                <a href="#stories" class="block py-2 text-gray-700">산지 스토리</a>
+                <a href="javascript:void(0)" onclick="showMyPage()" class="block py-2 text-gray-700">마이페이지</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center text-sm text-gray-600">
+                <a href="index.html" class="hover:text-primary">홈</a>
+                <i class="fas fa-chevron-right mx-2 text-xs"></i>
+                <span class="text-primary font-semibold">오늘의 농산물</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <!-- Sidebar Filters -->
+            <aside class="lg:w-64 flex-shrink-0">
+                <div class="bg-white rounded-xl shadow-sm p-6 sticky top-24">
+                    <h2 class="text-lg font-bold mb-6 flex items-center justify-between">
+                        <span>필터</span>
+                        <button onclick="resetFilters()" class="text-sm text-gray-500 hover:text-primary">초기화</button>
+                    </h2>
+
+                    <!-- Category Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-3 text-gray-800">카테고리</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="채소" class="category-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">채소 🥬</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="과일" class="category-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">과일 🍎</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="곡물" class="category-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">곡물/쌀 🌾</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="버섯" class="category-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">버섯 🍄</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="가공식품" class="category-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">가공식품 🍯</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="계란" class="category-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">계란/축산 🥚</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Region Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-3 text-gray-800">지역</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="충청" class="region-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">충청도</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="경상" class="region-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">경상도</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="전라" class="region-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">전라도</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="강원" class="region-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">강원도</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="경기" class="region-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">경기도</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="제주" class="region-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">제주도</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Certification Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-3 text-gray-800">재배 방식</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="유기농" class="cert-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">유기농 인증 🌱</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="무농약" class="cert-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">무농약 인증</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="checkbox" value="GAP" class="cert-filter" onchange="applyFilters()">
+                                <span class="ml-2 text-sm">GAP 인증 ✅</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-3 text-gray-800">가격대</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="radio" name="price" value="0-10000" class="price-filter"
+                                    onchange="applyFilters()">
+                                <span class="ml-2 text-sm">1만원 이하</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="radio" name="price" value="10000-20000" class="price-filter"
+                                    onchange="applyFilters()">
+                                <span class="ml-2 text-sm">1만원 ~ 2만원</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="radio" name="price" value="20000-50000" class="price-filter"
+                                    onchange="applyFilters()">
+                                <span class="ml-2 text-sm">2만원 ~ 5만원</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                                <input type="radio" name="price" value="50000-999999" class="price-filter"
+                                    onchange="applyFilters()">
+                                <span class="ml-2 text-sm">5만원 이상</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Products Grid -->
+            <main class="flex-1">
+                <!-- Header -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800 mb-1">오늘의 농산물</h1>
+                        <p class="text-gray-600" id="product-count">총 8개의 상품</p>
+                    </div>
+
+                    <!-- Sort Options -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm text-gray-600">정렬:</span>
+                        <select id="sort-select" onchange="sortProducts(this.value)"
+                            class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="popular">인기순</option>
+                            <option value="newest">신상품순</option>
+                            <option value="low-price">낮은 가격순</option>
+                            <option value="high-price">높은 가격순</option>
+                            <option value="rating">별점순</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Products will be loaded here by JavaScript -->
+                </div>
+
+                <!-- No Results -->
+                <div id="no-results" class="hidden text-center py-16">
+                    <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-xl text-gray-600 mb-2">검색 결과가 없습니다</p>
+                    <p class="text-gray-500 mb-6">다른 필터 조건을 선택해보세요</p>
+                    <button onclick="resetFilters()"
+                        class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-secondary transition">
+                        필터 초기화
+                    </button>
+                </div>
+
+                <!-- Pagination -->
+                <div id="pagination" class="flex justify-center items-center gap-2 mt-8">
+                    <!-- Pagination will be loaded here by JavaScript -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl font-bold text-white">어디산</span>
+                    </div>
+                    <p class="text-sm text-gray-400">
+                        생산자와 소비자를 연결하는<br>
+                        농산물 직거래 플랫폼
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">고객센터</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">공지사항</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">1:1 문의</a></li>
+                        <li><a href="#" class="hover:text-white">전화: 1588-0000</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">정책</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showPolicy('producer')" class="hover:text-white">생산자
+                                인증 정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('refund')" class="hover:text-white">환불/취소
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('grade')" class="hover:text-white">회원 등급
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('commission')" class="hover:text-white">수수료
+                                정산 기준</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">이용안내</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showTerms('service')"
+                                class="hover:text-white">서비스이용약관</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('privacy')"
+                                class="font-bold text-white hover:text-green-400">개인정보처리방침</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('email')"
+                                class="hover:text-white">이메일무단수집거부</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-sm text-gray-400 text-center">
+                <p>© 2026 어디산. All rights reserved. | 정책 기반 투명한 플랫폼 운영</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals will be inserted here by JavaScript -->
+    <div id="modal-container"></div>
+
+    <!-- Custom JavaScript -->
+    <script src="js/terms-data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+
+</body>
+
+</html>
