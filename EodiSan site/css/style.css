@@ -1,0 +1,545 @@
+/* =================================
+   어디산 - 농산물 직거래 플랫폼 스타일
+   ================================= */
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+}
+
+/* Logo Styles */
+nav img[alt="어디산"],
+footer img[alt="어디산"] {
+    filter: brightness(1.1);
+    transition: transform 0.3s ease;
+}
+
+nav img[alt="어디산"]:hover {
+    transform: scale(1.05);
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Category Cards Hover Effect */
+.category-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15);
+}
+
+.category-card:active {
+    transform: translateY(-2px);
+}
+
+/* Product Card Styles */
+.product-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(16, 185, 129, 0.2);
+}
+
+.product-image {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    background-color: #f3f4f6;
+}
+
+.product-image.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%);
+}
+
+.product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(16, 185, 129, 0.95);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.product-badge.organic {
+    background: rgba(16, 185, 129, 0.95);
+}
+
+.product-badge.new {
+    background: rgba(251, 191, 36, 0.95);
+}
+
+.origin-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #fef3c7;
+    color: #92400e;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.farmer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: #059669;
+}
+
+/* Farmer Card Styles */
+.farmer-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.farmer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(16, 185, 129, 0.15);
+}
+
+.farmer-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1.5rem;
+    border: 4px solid #10b981;
+    background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%);
+}
+
+.grade-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 1rem;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: white;
+    border-radius: 1.5rem;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+    position: relative;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    position: sticky;
+    top: 0;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.modal-close {
+    background: #f3f4f6;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: #e5e7eb;
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+/* Product Detail Modal Specific */
+.product-gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.main-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%);
+}
+
+.thumbnail-images {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+    border-color: #10b981;
+}
+
+/* Policy Notice Box */
+.policy-notice {
+    background: #eff6ff;
+    border: 2px solid #3b82f6;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.policy-notice-warning {
+    background: #fef3c7;
+    border: 2px solid #fbbf24;
+}
+
+.policy-notice-error {
+    background: #fee2e2;
+    border: 2px solid #ef4444;
+}
+
+/* Button Styles */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: #10b981;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-secondary {
+    background: white;
+    color: #10b981;
+    border: 2px solid #10b981;
+}
+
+.btn-secondary:hover {
+    background: #f0fdf4;
+}
+
+.btn-disabled {
+    background: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.btn-disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Cart Badge Animation */
+@keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.cart-added {
+    animation: bounce 0.3s ease;
+}
+
+/* Loading Spinner */
+.spinner {
+    border: 3px solid #f3f4f6;
+    border-top: 3px solid #10b981;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Rating Stars */
+.rating-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.rating-stars i {
+    color: #fbbf24;
+    font-size: 0.875rem;
+}
+
+/* Quantity Selector */
+.quantity-selector {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.quantity-selector button {
+    background: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.quantity-selector button:hover {
+    background: #f3f4f6;
+}
+
+.quantity-selector input {
+    border: none;
+    text-align: center;
+    width: 60px;
+    padding: 0.5rem;
+    font-weight: 600;
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+    .modal-content {
+        border-radius: 1rem 1rem 0 0;
+        max-height: 95vh;
+    }
+    
+    .modal-body {
+        padding: 1.5rem 1rem;
+    }
+    
+    .main-image {
+        height: 300px;
+    }
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #374151;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.75rem;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Success/Error Messages */
+.message-success {
+    background: #d1fae5;
+    border: 2px solid #10b981;
+    color: #065f46;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.message-error {
+    background: #fee2e2;
+    border: 2px solid #ef4444;
+    color: #991b1b;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Checkbox and Radio Custom Styles */
+.custom-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #10b981;
+}
+
+/* Table Styles for Policy */
+.policy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.policy-table th,
+.policy-table td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.policy-table th {
+    background: #f3f4f6;
+    font-weight: 600;
+}
+
+.policy-table tr:hover {
+    background: #f9fafb;
+}
+
+/* Print Styles */
+@media print {
+    nav, footer, .modal-overlay {
+        display: none;
+    }
+}
+
+/* Accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus Styles for Accessibility */
+a:focus,
+button:focus,
+input:focus,
+select:focus {
+    outline: 2px solid #10b981;
+    outline-offset: 2px;
+}
+
+/* Dark Mode Support (Optional) */
+@media (prefers-color-scheme: dark) {
+    /* Add dark mode styles if needed */
+}

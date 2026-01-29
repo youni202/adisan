@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>어디산 - 우리 농부의 신선한 이야기</title>
+    <meta name="description" content="생산자와 소비자를 직접 연결하는 농산물 직거래 플랫폼. 신선하고 안전한 우리 농산물을 만나보세요.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10b981',
+                        secondary: '#059669',
+                        accent: '#fbbf24',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-sans bg-gray-50">
+
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="images/logo.png" alt="어디산" class="h-12 w-auto">
+                    </a>
+                </div>
+
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="신선한 농산물을 검색해보세요"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
+                        <button
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="products.html" class="text-gray-700 hover:text-primary transition">오늘의 농산물</a>
+                    <a href="stories.html" class="text-gray-700 hover:text-primary transition">산지 스토리</a>
+                    <a href="about.html" class="text-gray-700 hover:text-primary transition">어디산 소개</a>
+                    <a href="javascript:void(0)" onclick="showMyPage()"
+                        class="text-gray-700 hover:text-primary transition">
+                        <i class="far fa-user"></i> 마이페이지
+                    </a>
+                    <a href="javascript:void(0)" onclick="showCart()"
+                        class="relative text-gray-700 hover:text-primary transition">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span
+                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                            id="cart-count">0</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-700" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-4 py-3 space-y-3">
+                <input type="text" placeholder="검색" class="w-full px-4 py-2 border border-gray-300 rounded-full">
+                <a href="products.html" class="block py-2 text-gray-700">오늘의 농산물</a>
+                <a href="stories.html" class="block py-2 text-gray-700">산지 스토리</a>
+                <a href="about.html" class="block py-2 text-gray-700">어디산 소개</a>
+                <a href="javascript:void(0)" onclick="showMyPage()" class="block py-2 text-gray-700">마이페이지</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-green-50 to-emerald-50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+                        <span class="text-primary">농부</span>의 정성이<br>
+                        당신의 <span class="text-primary">식탁</span>으로
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8">
+                        생산자와 소비자를 직접 연결하는 로컬팜에서<br>
+                        신선하고 안전한 우리 농산물을 만나보세요 🌾
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#products"
+                            class="bg-primary text-white px-8 py-3 rounded-full font-semibold hover:bg-secondary transition shadow-lg">
+                            상품 둘러보기
+                        </a>
+                        <a href="#how-it-works"
+                            class="bg-white text-gray-700 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition border-2 border-gray-200">
+                            플랫폼 소개
+                        </a>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="mt-10 flex flex-wrap gap-6">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check-circle text-primary text-xl"></i>
+                            <span class="text-sm text-gray-600">생산자 인증 시스템</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-shield-alt text-primary text-xl"></i>
+                            <span class="text-sm text-gray-600">안전한 거래</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-truck text-primary text-xl"></i>
+                            <span class="text-sm text-gray-600">신선 배송</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="relative">
+                    <div id="hero-image-container" class="rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://www.genspark.ai/api/files/s/RYXjT0bl?cache_control=3600" alt="로컬팜 신선한 농산물"
+                            class="w-full h-96 object-cover">
+                    </div>
+                    <!-- Floating Elements -->
+                    <div
+                        class="absolute -top-4 -right-4 bg-accent text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                        신선 보장 ✅
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">카테고리</h2>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+                <button onclick="filterCategory('채소')"
+                    class="category-card bg-gray-50 p-6 rounded-xl hover:shadow-lg transition text-center">
+                    <i class="fas fa-carrot text-4xl text-orange-500 mb-3"></i>
+                    <p class="font-semibold text-gray-700">채소</p>
+                </button>
+                <button onclick="filterCategory('과일')"
+                    class="category-card bg-gray-50 p-6 rounded-xl hover:shadow-lg transition text-center">
+                    <i class="fas fa-apple-alt text-4xl text-red-500 mb-3"></i>
+                    <p class="font-semibold text-gray-700">과일</p>
+                </button>
+                <button onclick="filterCategory('곡물')"
+                    class="category-card bg-gray-50 p-6 rounded-xl hover:shadow-lg transition text-center">
+                    <i class="fas fa-seedling text-4xl text-amber-600 mb-3"></i>
+                    <p class="font-semibold text-gray-700">곡물/쌀</p>
+                </button>
+                <button onclick="filterCategory('버섯')"
+                    class="category-card bg-gray-50 p-6 rounded-xl hover:shadow-lg transition text-center">
+                    <i class="fas fa-leaf text-4xl text-green-600 mb-3"></i>
+                    <p class="font-semibold text-gray-700">버섯</p>
+                </button>
+                <button onclick="filterCategory('가공식품')"
+                    class="category-card bg-gray-50 p-6 rounded-xl hover:shadow-lg transition text-center">
+                    <i class="fas fa-jar text-4xl text-purple-500 mb-3"></i>
+                    <p class="font-semibold text-gray-700">가공식품</p>
+                </button>
+                <button onclick="filterCategory('계란')"
+                    class="category-card bg-gray-50 p-6 rounded-xl hover:shadow-lg transition text-center">
+                    <i class="fas fa-egg text-4xl text-yellow-400 mb-3"></i>
+                    <p class="font-semibold text-gray-700">계란/축산</p>
+                </button>
+                <button onclick="filterCategory('수산물')"
+                    class="category-card bg-gray-50 p-6 rounded-xl hover:shadow-lg transition text-center">
+                    <i class="fas fa-fish text-4xl text-blue-500 mb-3"></i>
+                    <p class="font-semibold text-gray-700">수산물</p>
+                </button>
+                <button onclick="filterCategory('특가')"
+                    class="category-card bg-gray-50 p-6 rounded-xl hover:shadow-lg transition text-center">
+                    <i class="fas fa-tag text-4xl text-pink-500 mb-3"></i>
+                    <p class="font-semibold text-gray-700">기획전</p>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold">신선한 상품</h2>
+                <select class="px-4 py-2 border border-gray-300 rounded-lg" onchange="sortProducts(this.value)">
+                    <option value="popular">인기순</option>
+                    <option value="newest">신상품순</option>
+                    <option value="low-price">낮은 가격순</option>
+                    <option value="high-price">높은 가격순</option>
+                </select>
+            </div>
+
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Products will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">로컬팜은 어떻게 작동하나요?</h2>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user-check text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">1. 생산자 인증</h3>
+                    <p class="text-gray-600">
+                        엄격한 2단계 인증 시스템으로<br>
+                        안전한 생산자만 입점합니다<br>
+                        <span class="text-sm text-primary">(POLICY-001 준수)</span>
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-shopping-cart text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">2. 직거래 주문</h3>
+                    <p class="text-gray-600">
+                        중간 유통 없이 생산자에게 직접<br>
+                        신선한 농산물을 주문하세요<br>
+                        <span class="text-sm text-primary">(수수료 5.5%만 부과)</span>
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-truck-fast text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">3. 신선 배송</h3>
+                    <p class="text-gray-600">
+                        수확 후 바로 포장하여<br>
+                        2~3일 내 신선하게 배송<br>
+                        <span class="text-sm text-primary">(배송 후 7일 환불 보장)</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Farmers Section -->
+    <section id="farmers" class="py-16 bg-gradient-to-b from-green-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">우수 생산자</h2>
+
+            <div class="grid md:grid-cols-3 gap-8" id="farmers-grid">
+                <!-- Farmers will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Policy Notice Section -->
+    <section class="py-12 bg-blue-50 border-y border-blue-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-start space-x-4">
+                <i class="fas fa-info-circle text-3xl text-blue-500 mt-1"></i>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">⚠️ 농산물 특성 안내</h3>
+                    <p class="text-gray-700 mb-2">
+                        농산물은 자연 상태에서 재배되어 다음과 같은 개체차가 있을 수 있습니다:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>중량 ±10%, 크기 ±15% 허용 범위</li>
+                        <li>색상 및 당도의 자연적 편차</li>
+                        <li>작은 벌레 1~2마리 혼입 가능 (자연 재배 특성)</li>
+                    </ul>
+                    <p class="text-sm text-gray-500 mt-3">
+                        📄 상세 정책: <a href="javascript:void(0)" onclick="showPolicy('refund')"
+                            class="text-blue-600 hover:underline">환불/취소 정책 (POLICY-002)</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl font-bold text-white">어디산</span>
+                    </div>
+                    <p class="text-sm text-gray-400">
+                        생산자와 소비자를 연결하는<br>
+                        농산물 직거래 플랫폼
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">고객센터</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">공지사항</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">1:1 문의</a></li>
+                        <li><a href="#" class="hover:text-white">전화: 1588-0000</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">정책</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showPolicy('producer')" class="hover:text-white">생산자
+                                인증 정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('refund')" class="hover:text-white">환불/취소
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('grade')" class="hover:text-white">회원 등급
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('commission')" class="hover:text-white">수수료
+                                정산 기준</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">이용안내</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showTerms('service')"
+                                class="hover:text-white">서비스이용약관</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('privacy')"
+                                class="font-bold text-white hover:text-green-400">개인정보처리방침</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('email')"
+                                class="hover:text-white">이메일무단수집거부</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-sm text-gray-400 text-center">
+                <p>© 2026 어디산. All rights reserved. | 정책 기반 투명한 플랫폼 운영</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals will be inserted here by JavaScript -->
+    <div id="modal-container"></div>
+
+    <!-- Custom JavaScript -->
+    <script src="js/terms-data.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>산지 스토리 - 어디산</title>
+    <meta name="description" content="우리 농산물을 키우는 농부들의 진솔한 이야기를 만나보세요.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10b981',
+                        secondary: '#059669',
+                        accent: '#fbbf24',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-2 logo-hover">
+                    <img src="images/logo.png" alt="어디산" class="h-12 w-auto">
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="products.html" class="text-gray-700 hover:text-primary transition">오늘의 농산물</a>
+                    <a href="stories.html" class="text-primary font-bold transition">산지 스토리</a>
+                    <a href="about.html" class="text-gray-700 hover:text-primary transition">어디산 소개</a>
+                </div>
+
+                <!-- Right Side Icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="mypage.html" class="text-gray-700 hover:text-primary transition">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a href="cart.html" class="text-gray-700 hover:text-primary transition relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count"
+                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-700 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="products.html" class="block py-2 text-gray-700 hover:text-primary transition">오늘의 농산물</a>
+                <a href="stories.html" class="block py-2 text-primary font-bold transition">산지 스토리</a>
+                <a href="about.html" class="block py-2 text-gray-700 hover:text-primary transition">어디산 소개</a>
+                <a href="mypage.html" class="block py-2 text-gray-700 hover:text-primary transition">마이페이지</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="bg-green-800 text-white py-16">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl font-bold mb-4">산지 스토리</h1>
+                <p class="text-lg opacity-90">농부의 땀과 정성이 담긴 생생한 현장 이야기를 전해드립니다.</p>
+            </div>
+        </section>
+
+        <!-- Stories Grid -->
+        <section class="py-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Story Card 1 -->
+                    <article
+                        class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="홍성 유기농장"
+                                class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-2">
+                                <span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold mr-2">우수
+                                    농부</span>
+                                <span>2026.01.20</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 hover:text-primary cursor-pointer">홍성 유기농장
+                                김철수 농부의 하루</h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                새벽 4시, 아직 어둠이 가시지 않은 시간이지만 김철수 농부의 하루는 시작됩니다.
+                                20년간 지켜온 무농약 원칙, 벌레 먹은 잎사귀 하나도 소중히 여기는 그의 철학을 들어보았습니다.
+                                "땅이 건강해야 사람도 건강하죠." 투박하지만 진심 어린 그의 이야기...
+                            </p>
+                            <a href="#" class="text-primary font-semibold hover:underline flex items-center">
+                                더 읽어보기 <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Story Card 2 -->
+                    <article
+                        class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1595855709943-fae267c10332?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="안동 사과"
+                                class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-2">
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-semibold mr-2">명인
+                                    농부</span>
+                                <span>2026.01.15</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 hover:text-primary cursor-pointer">3대째 이어온
+                                안동 사과의 맛</h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                할아버지 때부터 이어온 과수원. 기후 변화 속에서도 당도를 유지하는 비결은 무엇일까요?
+                                안동 사과 농원의 이사과 명인은 '기다림'이라고 말합니다.
+                                강제로 익히지 않고 자연이 허락할 때 수확하는 그 고집스러운 원칙을 취재했습니다.
+                            </p>
+                            <a href="#" class="text-primary font-semibold hover:underline flex items-center">
+                                더 읽어보기 <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Story Card 3 -->
+                    <article
+                        class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1599525419985-703757bf03f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="제주 감귤"
+                                class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-2">
+                                <span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold mr-2">청년
+                                    농부</span>
+                                <span>2026.01.10</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 hover:text-primary cursor-pointer">제주로 내려간
+                                청년, 귤밭을 일구다</h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                서울 대기업을 그만두고 제주로 내려간 박감귤 씨.
+                                처음엔 마을 어르신들의 걱정을 샀지만, 이제는 스마트팜 기술을 도입해 동네에서 가장 맛있는 귤을 생산합니다.
+                                실패를 딛고 일어선 그의 귀농 도전기를 소개합니다.
+                            </p>
+                            <a href="#" class="text-primary font-semibold hover:underline flex items-center">
+                                더 읽어보기 <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="bg-gray-100 py-16">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">매주 새로운 산지 이야기를 받아보세요</h2>
+                <p class="text-gray-600 mb-8">회원가입 하시면 제철 농산물 소식과 농부님들의 이야기를 메일로 보내드립니다.</p>
+                <div class="max-w-md mx-auto flex gap-2">
+                    <input type="email" placeholder="이메일 주소를 입력해주세요"
+                        class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                    <button
+                        class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-secondary transition">구독하기</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl font-bold text-white">어디산</span>
+                    </div>
+                    <p class="text-sm text-gray-400">
+                        생산자와 소비자를 연결하는<br>
+                        농산물 직거래 플랫폼
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">고객센터</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">공지사항</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">1:1 문의</a></li>
+                        <li><a href="#" class="hover:text-white">전화: 1588-0000</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">정책</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showPolicy('producer')" class="hover:text-white">생산자
+                                인증 정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('refund')" class="hover:text-white">환불/취소
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('grade')" class="hover:text-white">회원 등급
+                                정책</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('commission')" class="hover:text-white">수수료
+                                정산 기준</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">이용안내</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="showTerms('service')"
+                                class="hover:text-white">서비스이용약관</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('privacy')"
+                                class="font-bold text-white hover:text-green-400">개인정보처리방침</a></li>
+                        <li><a href="javascript:void(0)" onclick="showTerms('email')"
+                                class="hover:text-white">이메일무단수집거부</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-sm text-gray-400 text-center">
+                <p>© 2026 어디산. All rights reserved. | 정책 기반 투명한 플랫폼 운영</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="modal-container"></div>
+
+    <script src="js/terms-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
